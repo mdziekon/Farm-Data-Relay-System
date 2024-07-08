@@ -112,6 +112,7 @@ void WiFiEvent(WiFiEvent_t event)
 #endif // USE_ETHERNET
 char *ssid = FDRS_WIFI_SSID;
 char *password = FDRS_WIFI_PASS;
+bool delegate_wifi = false;
 #ifdef USE_STATIC_IPADDRESS
   uint8_t hostIpAddress[4], gatewayAddress[4], subnetAddress[4], dns2Address[4]; 
 #endif
@@ -150,7 +151,10 @@ void begin_wifi()
   stringToByteArray(FDRS_DNS2_IPADDRESS, '.', dns2Address, 4, 10);
   WiFi.config(hostIpAddress, gatewayAddress, subnetAddress, dns1Address, dns2Address);
 #endif
-  WiFi.begin(ssid, password);
+  // Note: hackish way to allow to "manage" WIFI somewhere else than in FDRS
+  if (!delegate_wifi) {
+    WiFi.begin(ssid, password);
+  }
   while (WiFi.status() != WL_CONNECTED)
   {
     DBG("Connecting to WiFi...");
