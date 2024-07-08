@@ -110,8 +110,8 @@ void WiFiEvent(WiFiEvent_t event)
 }
 
 #endif // USE_ETHERNET
-const char *ssid = FDRS_WIFI_SSID;
-const char *password = FDRS_WIFI_PASS;
+char *ssid = FDRS_WIFI_SSID;
+char *password = FDRS_WIFI_PASS;
 #ifdef USE_STATIC_IPADDRESS
   uint8_t hostIpAddress[4], gatewayAddress[4], subnetAddress[4], dns2Address[4]; 
 #endif
